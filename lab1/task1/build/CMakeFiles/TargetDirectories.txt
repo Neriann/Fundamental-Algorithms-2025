@@ -1,0 +1,4 @@
+/home/nerian/projects/Fundamental-Algorithms-2025/lab1/task1/build/CMakeFiles/solution.dir
+/home/nerian/projects/Fundamental-Algorithms-2025/lab1/task1/build/CMakeFiles/run_tests.dir
+/home/nerian/projects/Fundamental-Algorithms-2025/lab1/task1/build/CMakeFiles/edit_cache.dir
+/home/nerian/projects/Fundamental-Algorithms-2025/lab1/task1/build/CMakeFiles/rebuild_cache.dir
