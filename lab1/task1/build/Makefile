@@ -117,41 +117,115 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named solution
+# Target rules for targets named lib
 
 # Build rule for target.
-solution: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 solution
-.PHONY : solution
+lib: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lib
+.PHONY : lib
 
 # fast build rule for target.
-solution/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/solution.dir/build.make CMakeFiles/solution.dir/build
-.PHONY : solution/fast
+lib/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/build
+.PHONY : lib/fast
 
-src/main.o: src/main.c.o
-.PHONY : src/main.o
+#=============================================================================
+# Target rules for targets named main
+
+# Build rule for target.
+main: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 main
+.PHONY : main
+
+# fast build rule for target.
+main/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
+.PHONY : main/fast
+
+#=============================================================================
+# Target rules for targets named tests
+
+# Build rule for target.
+tests: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tests
+.PHONY : tests
+
+# fast build rule for target.
+tests/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/build
+.PHONY : tests/fast
+
+main.o: main.c.o
+.PHONY : main.o
 
 # target to build an object file
-src/main.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/solution.dir/build.make CMakeFiles/solution.dir/src/main.c.o
-.PHONY : src/main.c.o
+main.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.c.o
+.PHONY : main.c.o
 
-src/main.i: src/main.c.i
-.PHONY : src/main.i
+main.i: main.c.i
+.PHONY : main.i
 
 # target to preprocess a source file
-src/main.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/solution.dir/build.make CMakeFiles/solution.dir/src/main.c.i
-.PHONY : src/main.c.i
+main.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.c.i
+.PHONY : main.c.i
 
-src/main.s: src/main.c.s
-.PHONY : src/main.s
+main.s: main.c.s
+.PHONY : main.s
 
 # target to generate assembly for a file
-src/main.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/solution.dir/build.make CMakeFiles/solution.dir/src/main.c.s
-.PHONY : src/main.c.s
+main.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.c.s
+.PHONY : main.c.s
+
+src/functions.o: src/functions.c.o
+.PHONY : src/functions.o
+
+# target to build an object file
+src/functions.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/src/functions.c.o
+.PHONY : src/functions.c.o
+
+src/functions.i: src/functions.c.i
+.PHONY : src/functions.i
+
+# target to preprocess a source file
+src/functions.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/src/functions.c.i
+.PHONY : src/functions.c.i
+
+src/functions.s: src/functions.c.s
+.PHONY : src/functions.s
+
+# target to generate assembly for a file
+src/functions.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/src/functions.c.s
+.PHONY : src/functions.c.s
+
+tests/unit.o: tests/unit.c.o
+.PHONY : tests/unit.o
+
+# target to build an object file
+tests/unit.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/tests/unit.c.o
+.PHONY : tests/unit.c.o
+
+tests/unit.i: tests/unit.c.i
+.PHONY : tests/unit.i
+
+# target to preprocess a source file
+tests/unit.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/tests/unit.c.i
+.PHONY : tests/unit.c.i
+
+tests/unit.s: tests/unit.c.s
+.PHONY : tests/unit.s
+
+# target to generate assembly for a file
+tests/unit.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/tests/unit.c.s
+.PHONY : tests/unit.c.s
 
 # Help Target
 help:
@@ -161,10 +235,18 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... solution"
-	@echo "... src/main.o"
-	@echo "... src/main.i"
-	@echo "... src/main.s"
+	@echo "... lib"
+	@echo "... main"
+	@echo "... tests"
+	@echo "... main.o"
+	@echo "... main.i"
+	@echo "... main.s"
+	@echo "... src/functions.o"
+	@echo "... src/functions.i"
+	@echo "... src/functions.s"
+	@echo "... tests/unit.o"
+	@echo "... tests/unit.i"
+	@echo "... tests/unit.s"
 .PHONY : help
 
 

@@ -63,11 +63,15 @@ CMAKE_BINARY_DIR = /home/nerian/projects/Fundamental-Algorithms-2025/lab1/task1/
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/solution.dir/all
+all: CMakeFiles/lib.dir/all
+all: CMakeFiles/main.dir/all
+all: CMakeFiles/tests.dir/all
 .PHONY : all
 
 # The main recursive "codegen" target.
-codegen: CMakeFiles/solution.dir/codegen
+codegen: CMakeFiles/lib.dir/codegen
+codegen: CMakeFiles/main.dir/codegen
+codegen: CMakeFiles/tests.dir/codegen
 .PHONY : codegen
 
 # The main recursive "preinstall" target.
@@ -75,40 +79,106 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/solution.dir/clean
+clean: CMakeFiles/lib.dir/clean
+clean: CMakeFiles/main.dir/clean
+clean: CMakeFiles/tests.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/solution.dir
+# Target rules for target CMakeFiles/lib.dir
 
 # All Build rule for target.
-CMakeFiles/solution.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/solution.dir/build.make CMakeFiles/solution.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/solution.dir/build.make CMakeFiles/solution.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/nerian/projects/Fundamental-Algorithms-2025/lab1/task1/build/CMakeFiles --progress-num=1,2 "Built target solution"
-.PHONY : CMakeFiles/solution.dir/all
+CMakeFiles/lib.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/nerian/projects/Fundamental-Algorithms-2025/lab1/task1/build/CMakeFiles --progress-num=1,2 "Built target lib"
+.PHONY : CMakeFiles/lib.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/solution.dir/rule: cmake_check_build_system
+CMakeFiles/lib.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/nerian/projects/Fundamental-Algorithms-2025/lab1/task1/build/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/solution.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/lib.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/nerian/projects/Fundamental-Algorithms-2025/lab1/task1/build/CMakeFiles 0
-.PHONY : CMakeFiles/solution.dir/rule
+.PHONY : CMakeFiles/lib.dir/rule
 
 # Convenience name for target.
-solution: CMakeFiles/solution.dir/rule
-.PHONY : solution
+lib: CMakeFiles/lib.dir/rule
+.PHONY : lib
 
 # codegen rule for target.
-CMakeFiles/solution.dir/codegen:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/solution.dir/build.make CMakeFiles/solution.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/nerian/projects/Fundamental-Algorithms-2025/lab1/task1/build/CMakeFiles --progress-num=1,2 "Finished codegen for target solution"
-.PHONY : CMakeFiles/solution.dir/codegen
+CMakeFiles/lib.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/nerian/projects/Fundamental-Algorithms-2025/lab1/task1/build/CMakeFiles --progress-num=1,2 "Finished codegen for target lib"
+.PHONY : CMakeFiles/lib.dir/codegen
 
 # clean rule for target.
-CMakeFiles/solution.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/solution.dir/build.make CMakeFiles/solution.dir/clean
-.PHONY : CMakeFiles/solution.dir/clean
+CMakeFiles/lib.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/clean
+.PHONY : CMakeFiles/lib.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/main.dir
+
+# All Build rule for target.
+CMakeFiles/main.dir/all: CMakeFiles/lib.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/nerian/projects/Fundamental-Algorithms-2025/lab1/task1/build/CMakeFiles --progress-num=3,4 "Built target main"
+.PHONY : CMakeFiles/main.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/main.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/nerian/projects/Fundamental-Algorithms-2025/lab1/task1/build/CMakeFiles 4
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/main.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/nerian/projects/Fundamental-Algorithms-2025/lab1/task1/build/CMakeFiles 0
+.PHONY : CMakeFiles/main.dir/rule
+
+# Convenience name for target.
+main: CMakeFiles/main.dir/rule
+.PHONY : main
+
+# codegen rule for target.
+CMakeFiles/main.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/nerian/projects/Fundamental-Algorithms-2025/lab1/task1/build/CMakeFiles --progress-num=3,4 "Finished codegen for target main"
+.PHONY : CMakeFiles/main.dir/codegen
+
+# clean rule for target.
+CMakeFiles/main.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/clean
+.PHONY : CMakeFiles/main.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/tests.dir
+
+# All Build rule for target.
+CMakeFiles/tests.dir/all: CMakeFiles/lib.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/nerian/projects/Fundamental-Algorithms-2025/lab1/task1/build/CMakeFiles --progress-num=5,6 "Built target tests"
+.PHONY : CMakeFiles/tests.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/tests.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/nerian/projects/Fundamental-Algorithms-2025/lab1/task1/build/CMakeFiles 4
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/tests.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/nerian/projects/Fundamental-Algorithms-2025/lab1/task1/build/CMakeFiles 0
+.PHONY : CMakeFiles/tests.dir/rule
+
+# Convenience name for target.
+tests: CMakeFiles/tests.dir/rule
+.PHONY : tests
+
+# codegen rule for target.
+CMakeFiles/tests.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/nerian/projects/Fundamental-Algorithms-2025/lab1/task1/build/CMakeFiles --progress-num=5,6 "Finished codegen for target tests"
+.PHONY : CMakeFiles/tests.dir/codegen
+
+# clean rule for target.
+CMakeFiles/tests.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/clean
+.PHONY : CMakeFiles/tests.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.
