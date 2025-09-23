@@ -5,7 +5,8 @@
 
 
 typedef enum {
-    SPECIFIC_NUMBER = 0,
+    UNNATURAL_NUMBER = 0,
+    SPECIFIC_NUMBER,
     PRIME_NUMBER,
     COMPOSITE_NUMBER
 } NumberType;

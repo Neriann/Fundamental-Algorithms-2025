@@ -112,6 +112,8 @@ void test_get_fact() {
 
 void test_is_prime() {
     printf("[...] Testing is_prime\n");
+    ASSERT_MSG(is_prime(-1000) == UNNATURAL_NUMBER);
+    ASSERT_MSG(is_prime(0) == UNNATURAL_NUMBER);
     ASSERT_MSG(is_prime(1) == SPECIFIC_NUMBER);
     ASSERT_MSG(is_prime(2) == PRIME_NUMBER);
     ASSERT_MSG(is_prime(9) == COMPOSITE_NUMBER);

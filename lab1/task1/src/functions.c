@@ -120,8 +120,11 @@ int64_t* get_divisible_numbers(const int64_t num) {
 
 
 NumberType is_prime(const int64_t num) {
-    if (num < 2) return SPECIFIC_NUMBER;
-    for (int64_t divider = 2; divider * divider <= num; ++divider) {
+    if (num <= 0) return UNNATURAL_NUMBER;
+    if (num == 1) return SPECIFIC_NUMBER;
+    if (num == 2) return PRIME_NUMBER;
+    if (num % 2 == 0) return COMPOSITE_NUMBER;
+    for (int64_t divider = 3; divider * divider <= num; divider += 2) {
         if (num % divider == 0) return COMPOSITE_NUMBER;
     }
     return PRIME_NUMBER;

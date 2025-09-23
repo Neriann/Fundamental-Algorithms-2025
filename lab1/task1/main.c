@@ -28,7 +28,8 @@ int main(int argc, char* argv[]) {
     else if (strcmp(flag, "-p") == 0) {
         const int64_t num = string_to_int(pointer_to_num, 10);
         const uint8_t code = is_prime(num);
-        if (code == PRIME_NUMBER) printf("The number %ld is prime\n", num);
+        if (code == UNNATURAL_NUMBER) printf("The number %ld isn't natural\n", num);
+        else if (code == PRIME_NUMBER) printf("The number %ld is prime\n", num);
         else if (code == COMPOSITE_NUMBER) printf("The number %ld is composite\n", num);
         else printf("The number %ld is specific\n", num);
     }

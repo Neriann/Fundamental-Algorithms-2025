@@ -1,5 +1,0 @@
-/home/nerian/projects/Fundamental-Algorithms-2025/lab1/task1/cmake-build-debug/CMakeFiles/lib.dir
-/home/nerian/projects/Fundamental-Algorithms-2025/lab1/task1/cmake-build-debug/CMakeFiles/main.dir
-/home/nerian/projects/Fundamental-Algorithms-2025/lab1/task1/cmake-build-debug/CMakeFiles/tests.dir
-/home/nerian/projects/Fundamental-Algorithms-2025/lab1/task1/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/nerian/projects/Fundamental-Algorithms-2025/lab1/task1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
