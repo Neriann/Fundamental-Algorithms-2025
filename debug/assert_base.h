@@ -14,6 +14,6 @@ do { \
     } else { \
         fprintf(stdout, "[OK] Test was (%s) successful\n", #expr); \
     } \
-} while (0)
+} while (0);
 
 #endif
