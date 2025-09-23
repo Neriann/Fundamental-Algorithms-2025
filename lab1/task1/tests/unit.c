@@ -1,19 +1,7 @@
-#include <assert.h>
 #include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
 
+#include "assert_base.h"
 #include "functions.h"
-
-
-#define ASSERT_MSG(expr) \
-if (!(expr)) { \
-    fprintf(stderr, "[FAIL] Assertion failed: %s\nFile: %s, Line: %d\n", \
-            #expr, __FILE__, __LINE__); \
-    exit(EXIT_FAILURE); \
-} else { \
-    fprintf(stdout, "[OK] Test was (%s) successful\n", #expr); \
-}
 
 
 void test_string_to_int() {
