@@ -5,13 +5,13 @@
 #include "functions.h"
 
 
-int main(int argc, char* argv[]) {
+int main(const int argc, const char* argv[]) {
     if (argc < 3) {
         printf("Not enough arguments\n");
         return 1;
     }
     const char* flag = argv[1];
-    char* pointer_to_num = argv[2];
+    const char* pointer_to_num = argv[2];
 
     if (strcmp(flag, "-h") == 0) {
         const int64_t num = string_to_int(pointer_to_num, 10);
@@ -66,6 +66,9 @@ int main(int argc, char* argv[]) {
         }
         printf("%s\n", fact);
         free(fact);
+    } else {
+        printf("This flag isn't defined\n");
+        return 1;
     }
     return 0;
 }

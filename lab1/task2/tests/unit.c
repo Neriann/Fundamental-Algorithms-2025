@@ -9,6 +9,7 @@ void test_find_nth_prime() {
     ASSERT_MSG(find_nth_prime(3) == 5);
     ASSERT_MSG(find_nth_prime(100) == 541);
     ASSERT_MSG(find_nth_prime(5e6) == 86028121);
+    ASSERT_MSG(find_nth_prime(6e6) == TOO_BIG_NUMBER);
 
     printf("[OK] Tests for find_nth_prime are accepted\n\n");}
 

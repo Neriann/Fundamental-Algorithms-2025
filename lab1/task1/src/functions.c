@@ -7,14 +7,20 @@
 
 #define MAX_SIZE 1025 // 1KB + \0
 
-int64_t string_to_int(const char* p, const int64_t base) {
-    if (base < 2 || base > 36) return 0;
-    int64_t res = 0;
-    while (*p) {
-        if (!isdigit((unsigned char)*p)) return -1; // ошибка ввода
-        res = res * base + (*p++ - '0');
+int64_t string_to_int(const char* str, const int64_t base) {
+    if (base < 2 || base > 36)
+        return 0;
+
+    int8_t mul = 1;
+    if (*str == '-') {
+        mul = -1;
+        ++str;
     }
-    return res;
+    int64_t res = 0;
+    while (*str) {
+        res = res * base + (isdigit(*str) ? *str++ - '0' : *str++ - 'A' + 10);
+    }
+    return mul * res;
 }
 
 char* int_to_string(const int64_t num, const int64_t base, char* res_end) {
@@ -80,7 +86,7 @@ char* decimal_to_base(const char* num, uint32_t base, char* res) {
     return p + 1;
 }
 
-char** get_divisible_by_base_digits(const char* num, uint32_t base) {
+char** get_divisible_by_base_digits(const char* num, const uint32_t base) {
     char tmp[MAX_SIZE];
     char* hex = decimal_to_base(num, base, tmp);
     if (!hex) return NULL;
@@ -111,7 +117,7 @@ int64_t* get_divisible_numbers(const int64_t num) {
     int64_t* numbers = malloc(sizeof(int64_t) * (sz + 1));
     if (!numbers) return NULL;
     int64_t* p = numbers;
-    for (int divisible = num; divisible <= 100; divisible += num) {
+    for (int64_t divisible = num; divisible <= 100; divisible += num) {
         *p++ = divisible;
     }
     *p = 0;

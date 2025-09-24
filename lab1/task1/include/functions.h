@@ -20,7 +20,7 @@ int64_t divide_by_digit(const char* num, char divider, char* res);
 
 char* decimal_to_base(const char* num, uint32_t base, char* res);
 
-char** get_divisible_by_base_digits(const char* num, uint32_t base);
+char** get_divisible_by_base_digits(const char* num, const uint32_t base);
 
 int64_t* get_divisible_numbers(const int64_t num);
 

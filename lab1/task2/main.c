@@ -3,7 +3,6 @@
 
 #include "functions.h"
 
-extern const int32_t N;
 
 void solve() {
     int32_t n;
@@ -12,9 +11,13 @@ void solve() {
     int32_t res = find_nth_prime(n);
     if (res == UNNATURAL_NUMBER) {
         printf("The number %d isn't natural\n", n);
-        return;
+    } else if (res == TOO_BIG_NUMBER) {
+        printf("The number %d is too big\n", n);
+    }else if (res == ALLOCATE_ERROR) {
+        printf("The allocated memory isn't allocated\n");
+    } else {
+        printf("%d\n", res);
     }
-    printf("%d\n", res);
 }
 
 int main() {
@@ -23,4 +26,6 @@ int main() {
     while (t--) {
         solve();
     }
+    clear_prime_cache();
+    return 0;
 }
