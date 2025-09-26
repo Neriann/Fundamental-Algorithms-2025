@@ -1,20 +1,16 @@
 #include "functions.h"
 
+#include <stdbool.h>
 #include <stdlib.h>
 
-const int32_t N = 1e8;
+#define N 1e8
 
-static int32_t* prime_numbers = NULL;
-static int32_t prime_numbers_size = 0;
 
 // вмещает примерно 5e6 простых чисел
-void generate_primes() {
-    if (prime_numbers) {
-        return;
-    }
+Code generate_primes(PrimeNumbers* primes) {
     bool* is_composite = calloc(N + 1, sizeof(bool));
     if (!is_composite) {
-        return;
+        return ALLOCATE_ERROR;
     }
     for (int32_t i = 2; 1LL * i * i <= N; ++i) {
         if (!is_composite[i]) {
@@ -23,43 +19,39 @@ void generate_primes() {
             }
         }
     }
-    int32_t prime_count = 0;
+    size_t primes_size = 0;
     for (int32_t i = 2; i <= N; ++i) {
         if (!is_composite[i]) {
-            ++prime_count;
+            ++primes_size;
         }
     }
-    prime_numbers_size = prime_count;
-    prime_numbers = malloc(prime_numbers_size * sizeof(int32_t));
-    if (!prime_numbers) {
+    primes->size = primes_size;
+    primes->values = malloc(primes->size * sizeof(int32_t));
+    if (!primes->values) {
         free(is_composite);
         is_composite = NULL;
-        return;
+        return ALLOCATE_ERROR;
     }
     size_t id = 0;
     for (int32_t num = 2; num <= N; ++num) {
         if (!is_composite[num]) {
-            prime_numbers[id++] = num;
+            primes->values[id++] = num;
         }
     }
     free(is_composite);
+    return SUCCESS;
 }
 
-int32_t find_nth_prime(const int32_t n) {
+PrimeNthNumber find_nth_prime(const int32_t n, const PrimeNumbers* primes) {
+    PrimeNthNumber solution = {SUCCESS, 0};
     if (n <= 0) {
-        return UNNATURAL_NUMBER;
+        solution.code = UNNATURAL_NUMBER;
+        return solution;
     }
-    generate_primes();
-    if (n >= prime_numbers_size) {
-        return TOO_BIG_NUMBER;
+    if (n >= primes->size) {
+        solution.code = TOO_BIG_NUMBER;
+        return solution;
     }
-    if (!prime_numbers) {
-        return ALLOCATE_ERROR;
-    }
-    return prime_numbers[n - 1];
-}
-
-void clear_prime_cache() {
-    free(prime_numbers);
-    prime_numbers = NULL;
+    solution.value = primes->values[n - 1];
+    return solution;
 }
