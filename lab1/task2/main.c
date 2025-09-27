@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "functions.h"
+#include "primes/functions.h"
 
 
 void solve(const PrimeNumbers* primes) {

@@ -1,5 +1,5 @@
 #include "assert_base.h"
-#include "functions.h"
+#include "primes/functions.h"
 
 void test_find_nth_prime(const PrimeNumbers* primes) {
     printf("[...] Testing find_nth_prime\n");

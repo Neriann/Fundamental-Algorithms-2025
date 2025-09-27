@@ -1,7 +1,8 @@
-#include "functions.h"
-
 #include <stdbool.h>
 #include <stdlib.h>
+
+#include "primes/functions.h"
+
 
 #define N 1e8
 
