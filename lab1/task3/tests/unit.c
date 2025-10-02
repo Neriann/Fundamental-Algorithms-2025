@@ -1,7 +1,7 @@
 #include <math.h>
 
 #include "assert_base.h"
-#include "functions.h"
+#include "double_calculations/functions.h"
 
 // Макрос для сравнения double с погрешностью
 #define ASSERT_DOUBLE_EQ(expected, actual, epsilon) \

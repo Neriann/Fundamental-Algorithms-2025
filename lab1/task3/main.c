@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "functions.h"
+#include "double_calculations/functions.h"
 
 #define IS_FLAG_Q (strcmp(flag, "-q") == 0 || strcmp(flag, "/q") == 0)
 #define IS_FLAG_M (strcmp(flag, "-M") == 0 || strcmp(flag, "/M") == 0)

@@ -1,4 +1,4 @@
-#include "functions.h"
+#include "double_calculations/functions.h"
 
 #include <ctype.h>
 #include <math.h>
