@@ -8,10 +8,11 @@
 
 
 char* choose_string(const char* p, char* res) {
+    *res = 0; // изначально результат пустой
     char pch = 0, ch;
     char str[BUFFER_SIZE];
     size_t pos = 0, shift = 0;
-    while (*p) {
+    while (*p || pos > 0) {
         ch = *p++;
         if (isalnum(ch)) {
             str[pos++] = ch;
@@ -50,8 +51,9 @@ int32_t string_to_int(const char* str, const int32_t base) {
     while (*str) {
         if (isalpha(*str)) {
             res = res * base + (tolower(*str++) - 'a' + 10);
+        } else {
+            res = res * base + (*str++ - '0');
         }
-        res = res * base + (*str++ - '0');
     }
     return res;
 }
