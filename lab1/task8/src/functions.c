@@ -21,7 +21,7 @@ int32_t get_max_num(char* buff, const int32_t base) {
         if (strcmp(buff, "STOP") == 0) {
             break;
         }
-        const int32_t num = string_to_int(buff, base);
+        const int32_t num = my_abs(string_to_int(buff, base));
         if (num > max) {
             max = num;
         }

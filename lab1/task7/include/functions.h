@@ -5,6 +5,7 @@
 
 #include <stdint.h>
 
+char* validate_num(const char* buff, char* res);
 
 char* choose_string(const char* buff, char* res);
 
