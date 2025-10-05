@@ -44,15 +44,15 @@ Solution get_solution_to_equation(const double eps, const double a, const double
     // ax^2 + bx + c = 0
     Solution result = {};
 
-    if (a < eps && b < eps && c < eps) {
+    if (my_abs(a) < eps && my_abs(b) < eps && my_abs(c) < eps) {
         result.type = INFINITE_SOLUTIONS;
         return result;
     }
-    else if (a < eps && b < eps) {
+    else if (my_abs(a) < eps && my_abs(b) < eps) {
         result.type = ZERO_SOLUTIONS;
         return result;
     }
-    else if (a < eps) {
+    else if (my_abs(a) <= eps) {
         result.type = ONE_REAL_SOLUTION;
         result.x1 = result.x2 = -c / b;
         return result;
@@ -65,7 +65,7 @@ Solution get_solution_to_equation(const double eps, const double a, const double
         result.im = sqrt(-D) / (2 * a);
         return result;
     }
-    else if (D < eps) {
+    else if (my_abs(D) < eps) {
         result.type = ONE_REAL_SOLUTION;
         result.x1 = -b / (2 * a);
     }
@@ -74,6 +74,10 @@ Solution get_solution_to_equation(const double eps, const double a, const double
         double sqrt_D = sqrt(D);
         result.x1 = (-b + sqrt_D) / (2 * a);
         result.x2 = (-b - sqrt_D) / (2 * a);
+
+        if (result.x1 > result.x2) {
+            swap(&result.x1, &result.x2);
+        }
     }
     return result;
 }
@@ -83,10 +87,10 @@ void print_solution_to_equation(Solution* res, const double eps, const double a,
     switch (res->type) {
 
     case INFINITE_SOLUTIONS:
-        printf("Infinite solutions\n");
+        printf("Infinite solutions at a = %lf, b = %lf, c = %lf\n", a, b, c);
         break;
     case ZERO_SOLUTIONS:
-        printf("Zero solutions\n");
+        printf("Zero solutions at a = %lf, b = %lf, c = %lf\n", a, b, c);
         break;
     case ONE_REAL_SOLUTION:
         printf("One solution - x = %.12lf at a = %lf, b = %lf, c = %lf\n", res->x1, a, b, c);
@@ -135,7 +139,7 @@ int8_t is_divisible_by(int64_t a, int64_t b) {
 
 
 int8_t is_rectangle(const double eps, const double a, const double b, const double c) {
-    if (a < eps || b < eps || c < eps) return 0; // вырожденные случаи
+    if (my_abs(a) < eps || my_abs(b) < eps || my_abs(c) < eps) return 0; // вырожденные случаи
 
     double left = a * a + b * b;
     double right = c * c;

@@ -3,9 +3,6 @@
 
 #include "double_calculations/functions.h"
 
-#define IS_FLAG_Q (strcmp(flag, "-q") == 0 || strcmp(flag, "/q") == 0)
-#define IS_FLAG_M (strcmp(flag, "-M") == 0 || strcmp(flag, "/M") == 0)
-#define IS_FLAG_T (strcmp(flag, "-t") == 0 || strcmp(flag, "/t") == 0)
 
 int main(const int argc, const char* argv[]) {
     if (argc < 2) {
@@ -13,7 +10,7 @@ int main(const int argc, const char* argv[]) {
         return 1;
     }
     const char* flag = argv[1];
-    if (IS_FLAG_M) {
+    if (strcmp(flag, "-m") == 0 || strcmp(flag, "/m") == 0) {
         if (argc < 4) {
             printf("Not enough arguments for this flag\n");
             return 1;
@@ -28,8 +25,8 @@ int main(const int argc, const char* argv[]) {
         }
     }
     else {
-        int8_t is_flag_t = IS_FLAG_T;
-        int8_t is_flag_q = IS_FLAG_Q;
+        int8_t is_flag_t = strcmp(flag, "-t") == 0 || strcmp(flag, "/t") == 0;
+        int8_t is_flag_q = strcmp(flag, "-q") == 0 || strcmp(flag, "/q") == 0;
         if (!is_flag_t && !is_flag_q) {
             printf("This flag isn't defined\n");
             return 1;
@@ -43,31 +40,39 @@ int main(const int argc, const char* argv[]) {
             const double a = string_to_double(argv[3]);
             const double b = string_to_double(argv[4]);
             const double c = string_to_double(argv[5]);
-            size_t i = 0;
 
             Solution result = {};
-            double permutation[] = {a, b, c};
+            Solution cache[6];
+            size_t cache_size = 0;
+            double permutations[6][3] = {{a, b, c}, {a, c, b}, {b, a, c}, {b, c, a}, {c, a, b}, {c, b, a}};
             if (is_flag_q) {
-                do {
-                    result = get_solution_to_equation(epsilon, permutation[0], permutation[1], permutation[2]);
-                    print_solution_to_equation(&result, epsilon, permutation[0], permutation[1], permutation[2]);
-                    swap(&permutation[i % 3], &permutation[(i + 1) % 3]);
+                for (size_t i = 0; i < 6; ++i) {
+                    result = get_solution_to_equation(epsilon, permutations[i][0], permutations[i][1], permutations[i][2]);
+                    uint8_t find = 0;
+                    for (size_t j = 0; j < cache_size; ++j) {
+                        if (cache[j].type == result.type && cache[j].x1 == result.x1 && cache[j].x2 == result.x2 && cache[j].re == result.re && cache[j].im == result.im) {
+                            find = 1;
+                            break;
+                        }
+                    }
+                    if (!find) {
+                        cache[cache_size++] = result;
+                        print_solution_to_equation(&result, epsilon, permutations[i][0], permutations[i][1], permutations[i][2]);
+                    }
                 }
-                while (++i != 6);
             } else {
                 int8_t find = 0;
-                do {
-                    if ((find = is_rectangle(epsilon, permutation[0], permutation[1], permutation[2]))) {
+                size_t i = 0;
+                for (; i < 6; ++i) {
+                    if ((find = is_rectangle(epsilon, permutations[i][0], permutations[i][1], permutations[i][2]))) {
                         break;
                     }
-                    swap(&permutation[i % 3], &permutation[(i + 1) % 3]);
                 }
-                while (++i != 6);
                 if (find) {
-                    printf("There is a rectangle with sides a = %lf, b = %lf, c = %lf\n", permutation[0], permutation[1], permutation[2]);
+                    printf("There is a rectangle with sides a = %lf, b = %lf, c = %lf\n", permutations[i][0], permutations[i][1], permutations[i][2]);
                 }
                 else {
-                    printf("There is no a rectangle with sides a = %lf, b = %lf, c = %lf\n", permutation[0], permutation[1], permutation[2]);
+                    printf("There is no a rectangle with sides a = %lf, b = %lf, c = %lf\n", permutations[0][0], permutations[0][1], permutations[0][2]);
                 }
             }
         }

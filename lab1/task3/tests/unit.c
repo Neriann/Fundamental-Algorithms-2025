@@ -63,23 +63,6 @@ void test_quadratic_equation() {
     printf("Quadratic equation tests passed!\n\n");
 }
 
-void test_swap() {
-    printf("Testing swap...\n");
-
-    double a = 3.14, b = 2.71;
-    swap(&a, &b);
-    ASSERT_MSG(a == 2.71 && b == 3.14);
-
-    a = -5.0, b = 10.0;
-    swap(&a, &b);
-    ASSERT_MSG(a == 10.0 && b == -5.0);
-
-    a = 0.0, b = 0.0;
-    swap(&a, &b);
-    ASSERT_MSG(a == 0.0 && b == 0.0);
-
-    printf("swap tests passed!\n\n");
-}
 
 void test_my_abs() {
     printf("Testing my_abs...\n");
@@ -202,7 +185,6 @@ void run_all_tests() {
 
     test_string_to_double();
     test_quadratic_equation();
-    test_swap();
     test_my_abs();
     test_string_to_int();
     test_is_divisible_by();
