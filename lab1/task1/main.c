@@ -34,15 +34,12 @@ int main(const int argc, const char* argv[]) {
         else printf("The number %ld is specific\n", num);
     }
     else if (strcmp(flag, "-s") == 0) {
-        char** answer = get_divisible_by_base_digits(pointer_to_num, 16);
-        if (answer) {
-            for (size_t i = 0; answer[i] != NULL; ++i) {
-                printf("%s ", answer[i]);
-                free(answer[i]);
-            }
-            printf("\n");
-            free(answer);
+        char buff[MAX_SIZE];
+        const char* hex = get_hex_num(pointer_to_num, buff);
+        while (*hex) {
+            printf("%c ", *hex++);
         }
+        printf("\n");
     }
     else if (strcmp(flag, "-e") == 0) {
         const int64_t num = string_to_int(pointer_to_num, 10);
@@ -52,6 +49,10 @@ int main(const int argc, const char* argv[]) {
         char* answer = get_sum(pointer_to_num);
         if (!answer) {
             printf("Memory allocation error\n");
+            return 1;
+        }
+        if (*answer == '0') {
+            printf("The number %s must be >= 1\n", pointer_to_num);
             return 1;
         }
         printf("%s\n", answer);

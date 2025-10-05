@@ -1,9 +1,10 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 
+#define MAX_SIZE 1025 // 1KB + \0
+
+
 #include <stdint.h>
-
-
 typedef enum {
     UNNATURAL_NUMBER = 0,
     SPECIFIC_NUMBER,
@@ -20,7 +21,7 @@ int64_t divide_by_digit(const char* num, char divider, char* res);
 
 char* decimal_to_base(const char* num, uint32_t base, char* res);
 
-char** get_divisible_by_base_digits(const char* num, const uint32_t base);
+char* get_hex_num(const char* num, char* res);
 
 int64_t* get_divisible_numbers(const int64_t num);
 

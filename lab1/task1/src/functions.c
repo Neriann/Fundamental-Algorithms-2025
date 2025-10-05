@@ -5,7 +5,6 @@
 
 #include "functions.h"
 
-#define MAX_SIZE 1025 // 1KB + \0
 
 int64_t string_to_int(const char* str, const int64_t base) {
     if (base < 2 || base > 36)
@@ -86,29 +85,12 @@ char* decimal_to_base(const char* num, uint32_t base, char* res) {
     return p + 1;
 }
 
-char** get_divisible_by_base_digits(const char* num, const uint32_t base) {
-    char tmp[MAX_SIZE];
-    char* hex = decimal_to_base(num, base, tmp);
-    if (!hex) return NULL;
+char* get_hex_num(const char* num, char* res) {
+    if (!num || !*num) return NULL;
 
-    size_t len_num = strlen(num);
-    size_t len_hex = strlen(hex);
-
-    char** answer = malloc(sizeof(char*) * (len_hex + 1));
-    if (!answer) return NULL;
-    answer[len_hex] = NULL;
-
-    for (size_t i = 0; i < len_hex; ++i) {
-        answer[i] = malloc(len_num + 1);
-        if (!answer[i]) {
-            for (size_t k = 0; k < i; ++k) free(answer[k]);
-            free(answer);
-            return NULL;
-        }
-        answer[i][0] = '0'; answer[i][1] = 0;
-        divide_by_digit(num, hex[i], answer[i]);
-    }
-    return answer;
+    int64_t dec = string_to_int(num, 10);
+    char* ans = int_to_string(dec, 16, res);
+    return ans;
 }
 
 int64_t* get_divisible_numbers(const int64_t num) {
@@ -137,6 +119,10 @@ NumberType is_prime(const int64_t num) {
 }
 
 void print_powers_table(const int64_t num) {
+    if (num < 1) {
+        printf("The minimum table size is 1\n");
+        return;
+    }
     if (num > 10) {
         printf("The maximum table size is 10\n");
         return;
@@ -230,6 +216,9 @@ void multiply(const char* a, const char* b, char* res) {
 
 
 char* get_sum(const char* num) {
+    if (*num == '0') return "0";
+
+    if (*num == '-') return "0";
     char num_plus_one[MAX_SIZE], mul[MAX_SIZE], res[MAX_SIZE];
     add(num, "1", num_plus_one);
     multiply(num, num_plus_one, mul);
