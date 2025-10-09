@@ -4,7 +4,7 @@
 #include "functions.h"
 
 
-void real_to_fraction(double real, uint32_t* numerator, uint32_t* denominator) {
+void real_to_fraction(double real, uint64_t* numerator, uint64_t* denominator) {
     size_t i = 0;
     while (real * *denominator != *numerator && i < 19) {
         // 19 - лимит знаков для double + 1 на запас
@@ -15,17 +15,17 @@ void real_to_fraction(double real, uint32_t* numerator, uint32_t* denominator) {
 }
 
 
-uint32_t gcd(uint32_t a, uint32_t b) {
+uint64_t gcd(uint64_t a, uint64_t b) {
     while (b) {
-        uint32_t tmp = a % b;
+        uint64_t tmp = a % b;
         a = b;
         b = tmp;
     }
     return a;
 }
 
-Code factorize(uint32_t num, uint32_t base) {
-    for (uint32_t d = 2; d * d <= num; ++d) {
+Code factorize(uint64_t num, uint64_t base) {
+    for (uint64_t d = 2; d * d <= num; ++d) {
         if (num % d == 0) {
             if (base % d != 0) {
                 return FAILURE;
@@ -42,11 +42,8 @@ Code factorize(uint32_t num, uint32_t base) {
 }
 
 
-Code is_final_value(Solution* result, int32_t count, ...) {
+Code is_final_value(Solution* result, int32_t base, int32_t count, ...) {
     if (count <= 0) {
-        return INVALID_ARG;
-    }
-    if (count % 2 != 0) {
         return INVALID_ARG;
     }
     if (!result) {
@@ -55,20 +52,19 @@ Code is_final_value(Solution* result, int32_t count, ...) {
     va_list args;
     va_start(args, count);
 
-    for (size_t i = 0; i < count / 2; ++i) {
+    for (size_t i = 0; i < count; ++i) {
         double real = va_arg(args, double);
-        int32_t base = va_arg(args, int32_t);
-        if (real == -1.0 || base == -1) {
+        if (real == -1.0) {
             return INVALID_ARG;
         }
         if (real < 0 || real > 1) {
+            result->real = real;
+            result->base = base;
             result->code = INVALID_ARG;
-        } else if (base < 2 || base > 36) {
-            result->code = INVALID_ARG;
-        }else {
-            uint32_t numerator = 1, denominator = 1;
+        } else {
+            uint64_t numerator = 1, denominator = 1;
             real_to_fraction(real, &numerator, &denominator);
-            uint32_t g = gcd(numerator, denominator);
+            uint64_t g = gcd(numerator, denominator);
             numerator /= g;
             denominator /= g;
             result->code = factorize(denominator, base);

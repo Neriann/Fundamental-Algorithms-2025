@@ -4,30 +4,30 @@
 #include "functions.h"
 
 int main() {
-    int32_t count = 6;
-    double real = 0.125;
-    int32_t base = 4;
+    int32_t count;
+    int32_t base;
+    scanf("%d %d", &count, &base);
+
+    double real1, real2, real3, real4 = 1.0/3.0; // типо count = 3
+    scanf("%lf %lf %lf", &real1, &real2, &real3);
+
     // ...
     if (count <= 0) {
         printf("Count must be greater than 0\n");
         return 1;
     }
-    if (count % 2 != 0) {
-        printf("Count must be even\n");
-        return 1;
-    }
-    Solution* result = (Solution*)malloc(count / 2 * sizeof(Solution));
+    Solution* result = (Solution*)malloc(count * sizeof(Solution));
     if (!result) {
         printf("Memory allocation failed\n");
         return 1;
     }
-    Code code = is_final_value(result, count, real, base, real, 15, real, 20 /* ... */);
+    Code code = is_final_value(result, base, count, real4, real2, real3, real1 /* ... */);
     if (code == INVALID_ARG) {
         printf("Invalid argument\n");
         return 1;
     }
     const Solution* p = result;
-    for (int i = 0; i < count / 2; ++i) {
+    for (int i = 0; i < count; ++i) {
         if (p->code == SUCCESS) {
             printf("The number %lf is finite in %d integer system\n", p->real, p->base);
         } else if (p->code == FAILURE) {

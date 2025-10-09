@@ -11,16 +11,16 @@ typedef enum {
 
 typedef struct {
     double real;
-    uint32_t base;
+    uint64_t base;
     Code code;
 } Solution;
 
-uint32_t gcd(uint32_t a, uint32_t b);
+uint64_t gcd(uint64_t a, uint64_t b);
 
-void real_to_fraction(double real, uint32_t* numerator, uint32_t* denominator);
+void real_to_fraction(double real, uint64_t* numerator, uint64_t* denominator);
 
-Code factorize(uint32_t num, uint32_t base);
+Code factorize(uint64_t num, uint64_t base);
 
-Code is_final_value(Solution* result, int32_t count, ...);
+Code is_final_value(Solution* result, int32_t base, int32_t count, ...);
 
 #endif //FUNCTIONS_H
