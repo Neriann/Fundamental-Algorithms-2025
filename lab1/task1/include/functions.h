@@ -15,7 +15,9 @@ typedef enum {
 
 int64_t string_to_int(const char* p, const int64_t base); // из с/с base в десятичную
 
-char* int_to_string(const int64_t num, const int64_t base, char* res_end); // из десятичной в заданную с/с
+char* int_to_string(int64_t num, int64_t base, char* p); // из десятичной в заданную с/с
+
+int8_t is_number(const char* p);
 
 int64_t divide_by_digit(const char* num, char divider, char* res);
 
@@ -38,7 +40,5 @@ void multiply(const char* a, const char* b, char* res);
 char* get_sum(const char* num);
 
 char* get_fact(const int64_t num);
-
-int main();
 
 #endif // FUNCTIONS_H

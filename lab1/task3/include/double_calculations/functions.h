@@ -19,6 +19,13 @@ typedef struct {
     double im;
 } Solution;
 
+typedef enum {
+    NEGATIVE_SIDES,
+    IS_RECTANGLE,
+    IS_NOT_RECTANGLE,
+    IS_NOT_TRIANGLE
+} Code;
+
 double string_to_double(const char* str);
 
 Solution get_solution_to_equation(const double eps, const double a, const double b, const double c);
@@ -33,6 +40,6 @@ int64_t string_to_int(const char* str, const int64_t base);
 
 int8_t is_divisible_by(int64_t a, int64_t b);
 
-int8_t is_rectangle(const double eps, const double a, const double b, const double c);
+Code is_rectangle(const double eps, const double a, const double b, const double c);
 
 #endif //FUNCTIONS_H

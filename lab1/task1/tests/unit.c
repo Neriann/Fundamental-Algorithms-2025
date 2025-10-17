@@ -110,6 +110,16 @@ void test_is_prime() {
     printf("[OK] Tests for is_prime are accepted\n\n");
 }
 
+void test_get_hex_num() {
+    printf("[...] Testing get_hex\n");
+    char buff[MAX_SIZE];
+    char* p = buff + MAX_SIZE - 1;
+    *p-- = 0;
+    char* str = "-255";
+    char* res = get_hex_num(str, p);
+    ASSERT_MSG(strcmp(res, "-FF") == 0)
+}
+
 void run_all_tests() {
     test_string_to_int();
     test_int_to_string();
@@ -120,6 +130,7 @@ void run_all_tests() {
     test_get_sum();
     test_get_fact();
     test_is_prime();
+    test_get_hex_num();
 
     printf("All tests passed!\n");
 }

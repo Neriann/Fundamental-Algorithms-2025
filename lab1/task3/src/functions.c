@@ -138,11 +138,16 @@ int8_t is_divisible_by(int64_t a, int64_t b) {
 }
 
 
-int8_t is_rectangle(const double eps, const double a, const double b, const double c) {
-    if (my_abs(a) < eps || my_abs(b) < eps || my_abs(c) < eps) return 0; // вырожденные случаи
+Code is_rectangle(const double eps, const double a, const double b, const double c) {
+    if (my_abs(a) < eps || my_abs(b) < eps || my_abs(c) < eps) return IS_NOT_TRIANGLE; // вырожденные случаи
 
+    if (a < eps || b < eps || c < eps) return NEGATIVE_SIDES;
+    if (a + b - c <= eps || a + c - b <= eps || b + c - a <= eps) return IS_NOT_TRIANGLE;
     double left = a * a + b * b;
     double right = c * c;
     double relative_error = my_abs(left - right) / left; // относительная погрешность, вместо абсолютной для более точных вычислений
-    return (int8_t)(relative_error < eps);
+    if (relative_error < eps) {
+        return IS_RECTANGLE;
+    }
+    return IS_NOT_RECTANGLE;
 }

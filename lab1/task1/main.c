@@ -35,6 +35,10 @@ int main(const int argc, const char* argv[]) {
     }
     else if (strcmp(flag, "-s") == 0) {
         char buff[MAX_SIZE];
+        if (!is_number(pointer_to_num)) {
+            printf("Not a number\n");
+            return 1;
+        }
         const char* hex = get_hex_num(pointer_to_num, buff);
         while (*hex) {
             printf("%c ", *hex++);

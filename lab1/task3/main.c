@@ -60,19 +60,25 @@ int main(const int argc, const char* argv[]) {
                         print_solution_to_equation(&result, epsilon, permutations[i][0], permutations[i][1], permutations[i][2]);
                     }
                 }
-            } else {
-                int8_t find = 0;
+            } else if (is_flag_t) {
+                Code code = 0;
                 size_t i = 0;
                 for (; i < 6; ++i) {
-                    if ((find = is_rectangle(epsilon, permutations[i][0], permutations[i][1], permutations[i][2]))) {
+                    if ((code = is_rectangle(epsilon, permutations[i][0], permutations[i][1], permutations[i][2]))) {
                         break;
                     }
                 }
-                if (find) {
+                if (code == NEGATIVE_SIDES) {
+                    printf("The sides should not be negative\n");
+                }
+                else if (code == IS_NOT_TRIANGLE) {
+                    printf("There is not a triangle with sides a = %lf, b = %lf, c = %lf\n", permutations[i][0], permutations[i][1], permutations[i][2]);
+                }
+                else if (code == IS_RECTANGLE) {
                     printf("There is a rectangle with sides a = %lf, b = %lf, c = %lf\n", permutations[i][0], permutations[i][1], permutations[i][2]);
                 }
                 else {
-                    printf("There is no a rectangle with sides a = %lf, b = %lf, c = %lf\n", permutations[0][0], permutations[0][1], permutations[0][2]);
+                    printf("There is not a rectangle with sides a = %lf, b = %lf, c = %lf\n", permutations[0][0], permutations[0][1], permutations[0][2]);
                 }
             }
         }

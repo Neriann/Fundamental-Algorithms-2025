@@ -22,21 +22,35 @@ int64_t string_to_int(const char* str, const int64_t base) {
     return mul * res;
 }
 
-char* int_to_string(const int64_t num, const int64_t base, char* res_end) {
-    if (base < 2 || base > 36) return NULL;
-    char* p = res_end;
-    *p = '\0';
+char* int_to_string(int64_t num, int64_t base, char* p) {
+    if (!p || base < 2 || base > 36) return NULL;
+    *p = 0;
     if (num == 0) {
-        *(--p) = '0';
+        *--p = '0';
         return p;
     }
     int64_t n = num;
     while (n) {
         int64_t rem = n % base;
+        if (rem < 0) rem = labs(rem);
         *(--p) = (rem > 9) ? ('A' + rem - 10) : ('0' + rem);
         n /= base;
     }
+    if (num < 0) {
+        *--p = '-';
+    }
     return p;
+}
+
+int8_t is_number(const char* str) {
+    if (!str || !*str) return 0;
+
+    if (*str == '-') ++str;
+
+    for (; *str; ++str) {
+        if (!isdigit(*str)) return 0;
+    }
+    return 1;
 }
 
 int64_t divide_by_digit(const char* num, char divider, char* res) {
