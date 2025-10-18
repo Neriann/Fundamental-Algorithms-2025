@@ -1,17 +1,31 @@
 #include <stdarg.h>
 #include <stddef.h>
+#include <math.h>
 
 #include "functions.h"
 
 
 void real_to_fraction(double real, uint64_t* numerator, uint64_t* denominator) {
-    size_t i = 0;
-    while (real * *denominator != *numerator && i < 19) {
-        // 19 - лимит знаков для double + 1 на запас
+    const double EPSILON = 1e-12;
+    const size_t MAX_ITERATIONS = 20;
+
+    *denominator = 1;
+    *numerator = 0;
+
+    for (size_t i = 0; i < MAX_ITERATIONS; ++i) {
+        double candidate = real * (*denominator);
+        double rounded = round(candidate);
+
+        if (fabs(candidate - rounded) < EPSILON) {
+            *numerator = (uint64_t)rounded;
+            return;
+        }
+
         *denominator *= 10;
-        *numerator = (int32_t)(real * *denominator);
-        ++i;
     }
+
+    // Если точное представление не найдено, используем приближенное
+    *numerator = (uint64_t)round(real * (*denominator));
 }
 
 
@@ -62,7 +76,7 @@ Code is_final_value(Solution* result, int32_t base, int32_t count, ...) {
             result->base = base;
             result->code = INVALID_ARG;
         } else {
-            uint64_t numerator = 1, denominator = 1;
+            uint64_t numerator, denominator;
             real_to_fraction(real, &numerator, &denominator);
             uint64_t g = gcd(numerator, denominator);
             numerator /= g;

@@ -9,3 +9,5 @@ add_executable(task1
     include/functions.h
     src/functions.c
     main.c)
+
+target_link_libraries(task1 m)

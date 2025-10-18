@@ -18,6 +18,12 @@ void test_strncmp() {
     a = my_strncmp("Hello", "Hello", 100);
     ASSERT_MSG(a == 0);
 
+    a = my_strncmp("", "", 100);
+    ASSERT_MSG(a == 0);
+
+    a = my_strncmp("B", "A", 100);
+    ASSERT_MSG(a == 1);
+
     a = my_strncmp("Hello", "Hello ", 100);
     ASSERT_MSG(a == -1);
 }
@@ -27,6 +33,13 @@ void test_memchr() {
     char* str = "Hello World";
     char* res = my_memchr(str, 'W', my_strlen(str));
     ASSERT_MSG(my_strncmp(res, "World", 5) == 0)
+
+    res = my_memchr(str, '1', my_strlen(str));
+    ASSERT_MSG(res == NULL)
+
+    str = "";
+    res = my_memchr(str, 'w', my_strlen(str));
+    ASSERT_MSG(res == NULL);
 }
 
 void test_memcmp() {

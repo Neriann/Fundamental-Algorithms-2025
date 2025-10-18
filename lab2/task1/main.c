@@ -8,7 +8,7 @@ int main() {
     int32_t base;
     scanf("%d %d", &count, &base);
 
-    double real1, real2, real3, real4 = 1.0/3.0; // типо count = 3
+    double real1, real2, real3; // типо count = 3
     scanf("%lf %lf %lf", &real1, &real2, &real3);
 
     // ...
@@ -21,7 +21,7 @@ int main() {
         printf("Memory allocation failed\n");
         return 1;
     }
-    Code code = is_final_value(result, base, count, real4, real2, real3, real1 /* ... */);
+    Code code = is_final_value(result, base, count, real1, real2, real3 /* ... */);
     if (code == INVALID_ARG) {
         printf("Invalid argument\n");
         return 1;
