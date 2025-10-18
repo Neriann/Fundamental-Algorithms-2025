@@ -19,6 +19,10 @@ typedef struct {
     double im;
 } Solution;
 
+typedef struct {
+    double a, b, c;
+} Permutation;
+
 typedef enum {
     NEGATIVE_SIDES,
     IS_RECTANGLE,

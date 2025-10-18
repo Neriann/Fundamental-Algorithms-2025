@@ -42,7 +42,7 @@ int main(const int argc, const char* argv[]) {
             const double c = string_to_double(argv[5]);
 
             Solution result = {};
-            Solution cache[6];
+            Permutation cache[6];
             size_t cache_size = 0;
             double permutations[6][3] = {{a, b, c}, {a, c, b}, {b, a, c}, {b, c, a}, {c, a, b}, {c, b, a}};
             if (is_flag_q) {
@@ -50,13 +50,16 @@ int main(const int argc, const char* argv[]) {
                     result = get_solution_to_equation(epsilon, permutations[i][0], permutations[i][1], permutations[i][2]);
                     uint8_t find = 0;
                     for (size_t j = 0; j < cache_size; ++j) {
-                        if (cache[j].type == result.type && cache[j].x1 == result.x1 && cache[j].x2 == result.x2 && cache[j].re == result.re && cache[j].im == result.im) {
+                        if (cache[j].a == permutations[i][0] && cache[j].b == permutations[i][1] && cache[j].c == permutations[i][2]) {
                             find = 1;
                             break;
                         }
                     }
                     if (!find) {
-                        cache[cache_size++] = result;
+                        cache[cache_size].a = permutations[i][0];
+                        cache[cache_size].b = permutations[i][1];
+                        cache[cache_size].c = permutations[i][2];
+                        ++cache_size;
                         print_solution_to_equation(&result, epsilon, permutations[i][0], permutations[i][1], permutations[i][2]);
                     }
                 }
