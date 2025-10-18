@@ -148,12 +148,17 @@ Code fibonacci(uint64_t value, uint64_t** fib, size_t* n) {
         *fib = (uint64_t*)malloc(10 * sizeof(uint64_t));
         if (!*fib) return MEM_ALLOC;
     }
-    size_t cap = 10, sz = 2;
+    if (value == 1) {
+        *fib[0] = 1;
+        *n = 1;
+        return SUCCESS;
+    }
 
+    size_t cap = 10, sz = 2;
     // Для представления Цекендорфа числа Фибоначчи: F_i, где i >= 2
     (*fib)[0] = 1;
     (*fib)[1] = 2;
-    while ((*fib)[sz - 1] + (*fib)[sz - 2] < value) {
+    while ((*fib)[sz - 1] + (*fib)[sz - 2] <= value) {
         if (cap <= sz) {
             cap *= 2;
             uint64_t* new_fib = (uint64_t*)realloc(*fib, cap * sizeof(uint64_t));
@@ -172,52 +177,13 @@ Code fibonacci(uint64_t value, uint64_t** fib, size_t* n) {
 }
 
 // Соединяем полученные данные в единое представление
-Code zeckendorf_view(uint64_t value, const uint64_t* fib, const bool* is_view, size_t sz, char* buff, size_t buff_size) {
+Code zeckendorf_view(const bool* is_view, size_t sz, char* buff, size_t buff_size) {
+    if (sz + 2 > buff_size) return BUFF_OVERFLOW;
     char* p = buff;
-    size_t len = 0;
-    char tmp[32];
     for (size_t i = 0; i < sz; ++i) {
-        if (len + 1 >= buff_size) return BUFF_OVERFLOW;
         *p++ = (char)('0' + is_view[i]);
-        ++len;
-
-
-        char* part_one = " * ";
-        while (*part_one) {
-            if (len + 1 >= buff_size) return BUFF_OVERFLOW;
-            *p++ = *part_one++;
-            ++len;
-        }
-
-        bool is_signed = 0;
-        Code code = integer_to_string(fib[i], is_signed, tmp, sizeof(tmp));
-        if (code != SUCCESS) return code;
-
-        char* part_two = tmp;
-        while (*part_two) {
-            if (len + 1 >= buff_size) return BUFF_OVERFLOW;
-            *p++ = *part_two++;
-            ++len;
-        }
-
-        char* part_three = i != sz - 1 ? " + " : " = ";
-        while (*part_three) {
-            if (len + 1 >= buff_size) return BUFF_OVERFLOW;
-            *p++ = *part_three++;
-            ++len;
-        }
-        if (i == sz - 1) {
-            code = integer_to_string(value, is_signed, tmp, sizeof(tmp));
-            if (code != SUCCESS) return code;
-
-            char* part_four = tmp;
-            while (*part_four) {
-                if (len + 1 >= buff_size) return BUFF_OVERFLOW;
-                *p++ = *part_four++;
-                ++len;
-            }
-        }
     }
+    *p++ = '1';
     *p = 0;
     return SUCCESS;
 }
@@ -248,7 +214,7 @@ Code zeckendorf_calc(uint64_t value, char* buff, size_t buff_size) {
         }
         if (curr == value) break;
     }
-    code = zeckendorf_view(value, fib, is_view, sz, buff, buff_size);
+    code = zeckendorf_view(is_view, sz, buff, buff_size);
     free(fib);
     free(is_view);
     return code;
