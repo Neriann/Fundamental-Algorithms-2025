@@ -21,7 +21,7 @@ int main() {
         printf("Memory allocation failed\n");
         return 1;
     }
-    Code code = is_final_value(result, base, count, real1, real2, real3 /* ... */);
+    Code code = is_final_value(result, base, count, 1.0/3, real2, real3 /* ... */);
     if (code == INVALID_ARG) {
         printf("Invalid argument\n");
         return 1;

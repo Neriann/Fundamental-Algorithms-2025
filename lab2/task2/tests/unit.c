@@ -126,6 +126,9 @@ void test_strcpy() {
     char* res = my_strncpy(str, "Hello World", 1);
     ASSERT_MSG(my_strncmp(res, "H", 11) == 0)
 
+    res = my_strncpy(str, "Hello World", 8);
+    ASSERT_MSG(my_strncmp(res, "Hello Wo", 8) == 0)
+
     res = my_strncpy(str, "Hello World", 100);
     ASSERT_MSG(my_strncmp(res, "Hello World", 100) == 0)
 }

@@ -14,7 +14,7 @@ void* my_memchr(const void* str, int c, size_t n) {
     const unsigned char* p = (const unsigned char*)str;
     for (size_t i = 0; i < n; ++i) {
         if ((int)p[i] == c) {
-            return (void*)p + i;
+            return (void*)(p + i);
         }
     }
     return NULL;

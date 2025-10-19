@@ -5,6 +5,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 
 // Из десятичной cистемы счисления в заданную
@@ -91,7 +92,8 @@ Code fraction_to_string(long double num, int64_t precision, char* buff, size_t b
         while (precision--) {
             if (len + 1 >= buff_size) return BUFF_OVERFLOW;
             frac_part *= 10.0;
-            *p++ = (char)((int64_t)frac_part % 10 + '0');
+            int64_t digit = !precision ? (int64_t)roundl(frac_part) % 10 : (int64_t)frac_part % 10;
+            *p++ = (char)(digit + '0');
             ++len;
         }
     }
@@ -143,7 +145,7 @@ Code integer_to_roman(int64_t num, char* buff, size_t buff_size) {
 
 
 Code fibonacci(uint64_t value, uint64_t** fib, size_t* n) {
-    if (value == 0) return ZERO_NUMBER;
+    if (value == 0 || !n) return ZERO_NUMBER;
     if (*fib == NULL) {
         *fib = (uint64_t*)malloc(10 * sizeof(uint64_t));
         if (!*fib) return MEM_ALLOC;
@@ -221,7 +223,7 @@ Code zeckendorf_calc(uint64_t value, char* buff, size_t buff_size) {
 }
 
 Code string_to_integer(const char* str, bool is_lower, int64_t base, int64_t* value) {
-    if (!str || !*str) return ZERO_NUMBER;
+    if (!str || !*str || !value) return ZERO_NUMBER;
 
     if (base < 2 || base > 36) {
         base = 10;
@@ -303,6 +305,9 @@ Status flags[] = {
 
 
 Code parse_params(const char* pos, int64_t* width, int64_t* precision, int64_t* bytes) {
+    if (!pos || !width || !precision || !bytes) {
+        return ZERO_NUMBER;
+    }
     // минимальная ширина строки
     while (isdigit(*pos)) {
         *width = *width * 10 + (*pos - '0');
@@ -374,10 +379,11 @@ void string_output(void* p, const char* str) {
     char** s = (char**)p;
     while (*str)
         *(*s)++ = *str++;
+    **s = 0;
 }
 
 int64_t overprintf_base(void* some, output_func out, const char* format, va_list* args) {
-    if (some == NULL)
+    if (!some || !format || !args)
         return 0;
 
     size_t count = 0;
@@ -436,6 +442,7 @@ int64_t overprintf_base(void* some, output_func out, const char* format, va_list
                     if (len + 1 >= sizeof(buff)) return BUFF_OVERFLOW;
                     *p++ = *string++;
                 }
+                *p = 0;
                 break;
             }
             case (ROMAN):
@@ -522,6 +529,7 @@ int64_t overprintf_base(void* some, output_func out, const char* format, va_list
         else {
             char s[] = {*format++, 0};
             out(some, s);
+            ++count;
         }
     }
     return (int64_t)count;
@@ -540,7 +548,7 @@ int64_t oversprintf(char* str, const char* format, ...) {
     va_start(args, format);
     // Используем двойной указатель, чтобы сдвинуть str и потом поставить терминирующий ноль.
     int64_t res = overprintf_base(&str, string_output, format, &args);
-    *str = 0;
+    // *str = 0;
     va_end(args);
     return res;
 }
