@@ -16,4 +16,16 @@ do { \
     } \
 } while (0);
 
+#define _ASSERT_MSG(expr, fmt, ...) \
+do { \
+    if (!(expr)) { \
+        fprintf(stderr, "[FAIL] Assertion failed: %s\n", #expr); \
+        fprintf(stderr, "Message: " fmt "\n", ##__VA_ARGS__); \
+        fprintf(stderr, "File: %s, Line: %d\n", __FILE__, __LINE__); \
+        exit(EXIT_FAILURE); \
+    } else { \
+        fprintf(stdout, "[OK] Test passed: %s with " fmt "\n", #expr, ##__VA_ARGS__); \
+    } \
+} while (0);
+
 #endif
