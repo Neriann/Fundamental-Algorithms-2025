@@ -145,13 +145,13 @@ Code integer_to_roman(int64_t num, char* buff, size_t buff_size) {
 
 
 Code fibonacci(uint64_t value, uint64_t** fib, size_t* n) {
-    if (value == 0 || !n) return ZERO_NUMBER;
+    if (!fib || !value || !n) return ZERO_NUMBER;
     if (*fib == NULL) {
         *fib = (uint64_t*)malloc(10 * sizeof(uint64_t));
         if (!*fib) return MEM_ALLOC;
     }
     if (value == 1) {
-        *fib[0] = 1;
+        (*fib)[0] = 1;
         *n = 1;
         return SUCCESS;
     }

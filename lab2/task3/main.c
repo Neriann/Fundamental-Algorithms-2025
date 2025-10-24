@@ -6,6 +6,6 @@
 #include <stdio.h>
 
 int main() {
-    int a = overfprintf(stdout, "Hello %s\n", "World");
+    int a = overfprintf(stdout, "%Zr\n", 5);
     printf("%d\n", a);
 }
