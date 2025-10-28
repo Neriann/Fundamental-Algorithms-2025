@@ -1,0 +1,13 @@
+John Doe MMM_100 2 2 2 3 2
+Cristiano Ronaldo FC_110B 5 4 3 4 3
+John Smith CS-21-1 4 5 3 4 4
+Emma Johnson AI-22-2 5 4 4 5 3
+Michael Brown CS-21-1 3 4 5 3 4
+Sarah Davis DS-22-1 4 5 4 4 5
+David Wilson CYBER-21-2 5 3 5 4 3
+Lisa Taylor WEB-22-3 4 4 3 5 4
+Robert Martinez GAME-21-1 3 5 4 3 5
+Jennifer Taylor ROBOT-22-2 5 4 5 5 4
+Thomas Moore NET-21-3 4 3 4 4 3
+Maria Clark DB-22-1 5 5 3 4 4
+John Paper LL-20-3 3 2 4 4 5
