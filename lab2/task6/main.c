@@ -117,7 +117,7 @@ Code deep_copy(const Student** const result, size_t* const size, const Student* 
     return SUCCESS;
 }
 
-void log(Code code) {
+void _log(Code code) {
     switch (code) {
     case OUT_OF_RANGE:
         printf("Out of range\n"); break;
@@ -165,7 +165,7 @@ void handler(Student* students, size_t count_students, FILE* stream) {
             printf("Unknown command: %s", buff);
             break;
         }
-        log(ans);
+        _log(ans);
         cleanup_print_by_command(&result, &size, command, stream);
     }
 }

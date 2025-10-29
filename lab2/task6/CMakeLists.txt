@@ -3,7 +3,6 @@ project(task6 C)
 
 set(CMAKE_C_STANDARD 11)
 set(DEBUG ../../debug)
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -pedantic -g")
 
 include_directories(include)
 include_directories(${DEBUG})

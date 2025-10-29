@@ -44,6 +44,8 @@ void print_student_info(const Student* student, FILE* stream) {
     fprintf(stream, "\n");
     double avg_grade = get_average_grade(student);
     fprintf(stream, "Average grade: %lf\n", avg_grade);
+    // очищаем буфер, чтобы интерактивно видеть результат запроса
+    fflush(stream);
 }
 
 
