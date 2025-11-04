@@ -28,30 +28,41 @@ int main() {
             fputs(buff, output_file);
             continue;
         }
-        char** result = NULL;
-        size_t result_size;
-        Code code = parse_lexeme(&result, &result_size, buff);
-        if (code != SUCCESS) {
+        char** lexemes = NULL, **spaces = NULL;
+        size_t lexemes_size = 0, spaces_size = 0;
+        Code code1 = parse_lexeme(&lexemes, &lexemes_size, 0, buff);
+        Code code2 = parse_lexeme(&spaces, &spaces_size, 1, buff);
+        if (code1 != SUCCESS || code2 != SUCCESS) {
             printf("Error while parsing lexemes\n");
             fclose(input_file);
             fclose(output_file);
             return 1;
         }
-        Code ans = calculate_normalize_data(result, result_size, output_file);
+        Code ans = calculating_normalized_data(lexemes, lexemes_size, spaces, spaces_size, output_file);
         if (ans != SUCCESS) {
             printf("Error while calculating normalized data\n");
-            for (size_t i = 0; i < result_size; ++i) {
-                free(result[i]);
+            for (size_t i = 0; i < lexemes_size; ++i) {
+                free(lexemes[i]);
             }
-            free(result);
+            free(lexemes);
+            for (size_t i = 0; i < spaces_size; ++i) {
+                free(spaces[i]);
+            }
+            free(spaces);
+
             fclose(input_file);
             fclose(output_file);
             return 1;
         }
-        for (size_t i = 0; i < result_size; ++i) {
-            free(result[i]);
+        for (size_t i = 0; i < lexemes_size; ++i) {
+            free(lexemes[i]);
         }
-        free(result);
+        free(lexemes);
+
+        for (size_t i = 0; i < spaces_size; ++i) {
+            free(spaces[i]);
+        }
+        free(spaces);
     }
     fclose(input_file);
     fclose(output_file);
