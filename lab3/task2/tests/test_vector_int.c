@@ -3,6 +3,8 @@
 #include <string.h>
 
 #include "vector.h"
+#include "../src/vector.c"
+
 #include "assert_base.h"
 
 // Объявляем вектор для int

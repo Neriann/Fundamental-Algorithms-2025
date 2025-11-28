@@ -1,7 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+
 #include "vector.h"
+#include "../src/vector.c"
 #include "assert_base.h"
 
 // Сложная структура для тестирования

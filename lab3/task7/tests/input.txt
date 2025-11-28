@@ -1,0 +1,12 @@
+A = 2
+B = 3
+print(B)
+C = A * (B + 3)
+D = C ^ B
+E = 1024
+print(E)
+K = (25 - 9) ^ 2 * (10 + 1 - 1)
+print(K)
+F = A = K
+A
+print(A + B - C)

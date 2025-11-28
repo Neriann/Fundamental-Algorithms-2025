@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.30)
-project(task2 C)
+project(FA_LAB3_TASK2 C)
 
 set(CMAKE_C_STANDARD 11)
 set(DEBUG ../../debug)
