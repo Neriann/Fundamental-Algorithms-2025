@@ -6,39 +6,36 @@
 
 #include <stdint.h>
 typedef enum {
-    UNNATURAL_NUMBER = 0,
+    SUCCESS = 0,
+    UNNATURAL_NUMBER,
     SPECIFIC_NUMBER,
     PRIME_NUMBER,
-    COMPOSITE_NUMBER
-} NumberType;
+    COMPOSITE_NUMBER,
+    OVERFLOW_NUMBER,
+    NEGATIVE_NUMBER,
+    ZERO_NUMBER,
+    NOT_NUMBER,
+    INVALID_ARGS,
+    ALLOCATE_ERROR
+} Code;
 
 
-int64_t string_to_int(const char* p, const int64_t base); // из с/с base в десятичную
+Code string_to_int(int64_t* result, const char* p, int64_t base); // из с/с base в десятичную
 
-char* int_to_string(int64_t num, int64_t base, char* p); // из десятичной в заданную с/с
+Code int_to_string(int64_t num, int64_t base, char** res, char* p); // из десятичной в заданную с/с
 
-int8_t is_number(const char* p);
+Code is_number(const char* p);
 
-int64_t divide_by_digit(const char* num, char divider, char* res);
+Code get_hex_num(const char* num, char** res, char* buff);
 
-char* decimal_to_base(const char* num, uint32_t base, char* res);
+Code get_divisible_numbers(int64_t** res, size_t* res_size, int64_t num);
 
-char* get_hex_num(const char* num, char* res);
+Code is_prime(int64_t num);
 
-int64_t* get_divisible_numbers(const int64_t num);
+void print_powers_table(int64_t num);
 
-NumberType is_prime(const int64_t num);
+Code get_sum(int64_t* sum, int64_t num);
 
-void print_powers_table(const int64_t num);
-
-void add(const char* a, const char* b, char* res);
-
-void mul_one_digit(const char* a, int8_t digit, char* res);
-
-void multiply(const char* a, const char* b, char* res);
-
-char* get_sum(const char* num);
-
-char* get_fact(const int64_t num);
+Code get_fact(int64_t* fact, int64_t num);
 
 #endif // FUNCTIONS_H

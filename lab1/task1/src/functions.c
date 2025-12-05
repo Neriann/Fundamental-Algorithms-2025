@@ -6,9 +6,9 @@
 #include "functions.h"
 
 
-int64_t string_to_int(const char* str, const int64_t base) {
-    if (base < 2 || base > 36)
-        return 0;
+Code string_to_int(int64_t* result, const char* str, int64_t base) {
+    if (!result || base != 10)
+        return INVALID_ARGS;
 
     int8_t mul = 1;
     if (*str == '-') {
@@ -17,17 +17,23 @@ int64_t string_to_int(const char* str, const int64_t base) {
     }
     int64_t res = 0;
     while (*str) {
-        res = res * base + (isdigit(*str) ? *str++ - '0' : *str++ - 'A' + 10);
+        int tmp = (isdigit(*str) ? *str++ - '0' : *str++ - 'A' + 10);
+        if (res > INT64_MAX / base - tmp) {
+            return OVERFLOW_NUMBER;
+        }
+        res = res * base + tmp;
     }
-    return mul * res;
+    *result = mul * res;
+    return SUCCESS;
 }
 
-char* int_to_string(int64_t num, int64_t base, char* p) {
-    if (!p || base < 2 || base > 36) return NULL;
+Code int_to_string(int64_t num, int64_t base, char** res, char* p) {
+    if (!p || base < 2 || base > 36) return INVALID_ARGS;
     *p = 0;
     if (num == 0) {
         *--p = '0';
-        return p;
+        *res = p;
+        return SUCCESS;
     }
     int64_t n = num;
     while (n) {
@@ -39,89 +45,53 @@ char* int_to_string(int64_t num, int64_t base, char* p) {
     if (num < 0) {
         *--p = '-';
     }
-    return p;
+    *res = p;
+    return SUCCESS;
 }
 
-int8_t is_number(const char* str) {
-    if (!str || !*str) return 0;
+Code is_number(const char* str) {
+    if (!str || !*str) return NOT_NUMBER;
 
     if (*str == '-') ++str;
 
     for (; *str; ++str) {
-        if (!isdigit(*str)) return 0;
+        if (!isdigit(*str)) return NOT_NUMBER;
     }
-    return 1;
+    return SUCCESS;
 }
 
-int64_t divide_by_digit(const char* num, char divider, char* res) {
-    if (!num || !*num) return 0;
-    size_t len_a = strlen(num);
-    int64_t current = 0;
-    size_t j = 0;
-    int64_t div = isdigit((unsigned char)divider) ? divider - '0' : divider - 'A' + 10;
+Code get_hex_num(const char* num, char** res, char* buff) {
+    if (!num || !*num) return INVALID_ARGS;
 
-    if (!div) {
-        if (res) strcpy(res, "inf");
-        return 0;
-    }
+    int64_t dec;
+    Code code = string_to_int(&dec, num, 10);
+    if (code != SUCCESS) return code;
 
-    uint8_t found_first = 0;
-    for (size_t i = 0; i < len_a; ++i) {
-        current = 10 * current + (num[i] - '0');
-        if (current >= div) {
-            found_first = 1;
-        }
-        if (found_first) {
-            if (res) res[j++] = '0' + current / div;
-            current %= div;
-        }
-    }
-    if (res) res[j] = 0;
-    return current;
+    char* p;
+    code = int_to_string(dec, 16, &p, buff);
+    if (code != SUCCESS) return code;
+
+    *res = p;
+    return SUCCESS;
 }
 
-char* decimal_to_base(const char* num, uint32_t base, char* res) {
-    if (base < 2 || base > 36) return NULL;
-    size_t len = strlen(num);
-
-    char tmp[MAX_SIZE];
-    strcpy(tmp, num);
-
-    char* p = res + MAX_SIZE - 1;
-    *p-- = 0;
-    int64_t remainder = 0;
-    char div = base > 9 ? 'A' + base - 10 : '0' + base;
-    for (size_t i = 0; i < len; ++i) {
-        remainder = divide_by_digit(tmp, div, NULL);
-        *p-- = (remainder > 9) ? ('A' + remainder - 10) : ('0' + remainder);
-        divide_by_digit(tmp, div, tmp);
-    }
-    return p + 1;
-}
-
-char* get_hex_num(const char* num, char* res) {
-    if (!num || !*num) return NULL;
-
-    int64_t dec = string_to_int(num, 10);
-    char* ans = int_to_string(dec, 16, res);
-    return ans;
-}
-
-int64_t* get_divisible_numbers(const int64_t num) {
-    if (num >= 100 || num <= 0) return NULL;
+Code get_divisible_numbers(int64_t** res, size_t* res_size, int64_t num) {
+    num = labs(num);
+    if (num > 100) return INVALID_ARGS;
     size_t sz = 100 / num;
-    int64_t* numbers = malloc(sizeof(int64_t) * (sz + 1));
-    if (!numbers) return NULL;
+    int64_t* numbers = malloc(sizeof(int64_t) * sz);
+    if (!numbers) return ALLOCATE_ERROR;
     int64_t* p = numbers;
     for (int64_t divisible = num; divisible <= 100; divisible += num) {
         *p++ = divisible;
     }
-    *p = 0;
-    return numbers;
+    *res = numbers;
+    *res_size = sz;
+    return SUCCESS;
 }
 
 
-NumberType is_prime(const int64_t num) {
+Code is_prime(int64_t num) {
     if (num <= 0) return UNNATURAL_NUMBER;
     if (num == 1) return SPECIFIC_NUMBER;
     if (num == 2) return PRIME_NUMBER;
@@ -132,7 +102,7 @@ NumberType is_prime(const int64_t num) {
     return PRIME_NUMBER;
 }
 
-void print_powers_table(const int64_t num) {
+void print_powers_table(int64_t num) {
     if (num < 1) {
         printf("The minimum table size is 1\n");
         return;
@@ -170,92 +140,34 @@ void print_powers_table(const int64_t num) {
     }
 }
 
-void add(const char* a, const char* b, char* res) {
-    size_t len_a = strlen(a), len_b = strlen(b);
 
-    const char* ptr_a = len_a ? a + len_a - 1 : NULL;
-    const char* ptr_b = len_b ? b + len_b - 1 : NULL;
 
-    char* ptr_res = res + MAX_SIZE - 1;
-    *ptr_res-- = 0;
+Code get_sum(int64_t* sum, int64_t num) {
+    if (num < 0)
+        return NEGATIVE_NUMBER;
+    if (!num)
+        return ZERO_NUMBER;
 
-    uint8_t remainder = 0, sum_digits, current_digit_a, current_digit_b;
-    while ((ptr_a && ptr_a >= a) || (ptr_b && ptr_b >= b) || remainder) {
-        current_digit_a = (ptr_a && ptr_a >= a) ? *ptr_a-- - '0' : 0;
-        current_digit_b = (ptr_b && ptr_b >= b) ? *ptr_b-- - '0' : 0;
-        sum_digits = current_digit_a + current_digit_b + remainder;
+    int64_t res = 0;
+    for (int64_t i = 1; i <= num; ++i) {
+        if (num > INT64_MAX / i) return OVERFLOW_NUMBER;
 
-        remainder = sum_digits / 10;
-        sum_digits %= 10;
-
-        *ptr_res-- = sum_digits + '0';
+        res += i;
     }
-    size_t len_sum = (res + MAX_SIZE) - (ptr_res + 1);
-    memmove(res, ptr_res + 1, len_sum);
+    *sum = res;
+    return SUCCESS;
 }
 
-void mul_one_digit(const char* a, int8_t digit, char* res) {
-    size_t n = strlen(a);
-    res[n] = 0;
-    int64_t remainder = 0;
-    for (int64_t i = n - 1; i >= 0; --i) {
-        int64_t prod = (a[i] - '0') * digit + remainder;
-        remainder = prod / 10;
-        res[i] = (prod % 10) + '0';
-    }
-    if (remainder) {
-        memmove(res + 1, res, n + 1);
-        res[0] = '0' + remainder;
-    }
-}
+Code get_fact(int64_t* fact, int64_t num) {
+    if (num < 0) return NEGATIVE_NUMBER;
 
-void multiply(const char* a, const char* b, char* res) {
-    res[0] = '0'; res[1] = '\0'; // инициализация
-    size_t len_b = strlen(b);
-    char part[MAX_SIZE], tmp[MAX_SIZE];
-
-    for (int64_t i = len_b - 1, shift = 0; i >= 0; --i, ++shift) {
-        int8_t digit = b[i] - '0';
-        if (digit == 0) continue;
-        mul_one_digit(a, digit, part);
-        int64_t len = strlen(part);
-        for (int64_t j = 0; j < shift; ++j) part[len + j] = '0';
-        part[len + shift] = 0;
-        add(res, part, tmp);
-        strcpy(res, tmp);
-    }
-    if (res[0] == '0') res[1] = 0; // если много нулей спереди то это возможно только при a = 0, поэтому явно указываем ответ 0
-}
-
-
-
-char* get_sum(const char* num) {
-    if (*num == '0') return "0";
-
-    if (*num == '-') return "0";
-    char num_plus_one[MAX_SIZE], mul[MAX_SIZE], res[MAX_SIZE];
-    add(num, "1", num_plus_one);
-    multiply(num, num_plus_one, mul);
-    divide_by_digit(mul, '2', res);
-    char* ans = malloc(strlen(res) + 1);
-    if (!ans) return NULL;
-    strcpy(ans, res);
-    return ans;
-}
-
-char* get_fact(const int64_t num) {
-    char res[MAX_SIZE], buf[MAX_SIZE], tmp[MAX_SIZE];
-    res[0] = '1'; res[1] = 0;
-
+    int64_t res = 1;
     for (int64_t i = 2; i <= num; ++i) {
-        char* current = buf + MAX_SIZE - 1;
-        *current = 0;
-        current = int_to_string(i, 10, current);
-        multiply(res, current, tmp);
-        strcpy(res, tmp);
+        if (res > INT64_MAX / i) {
+            return OVERFLOW_NUMBER;
+        }
+        res *= i;
     }
-    char* ans = malloc(strlen(res) + 1);
-    if (!ans) return NULL;
-    strcpy(ans, res);
-    return ans;
+    *fact = res;
+    return SUCCESS;
 }
