@@ -9,7 +9,8 @@ include_directories(include)
 add_executable(binomial_heap
         include/binomial_heap.h
         src/binomial_heap.c
-        main.c)
+        main.c
+)
 
 add_executable(tests
         include/binomial_heap.h
